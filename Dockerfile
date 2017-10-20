@@ -1,18 +1,17 @@
-# VERSION 1.8.1-1
-# AUTHOR: Matthieu "Puckel_" Roisil
-# DESCRIPTION: Basic Airflow container
-# BUILD: docker build --rm -t puckel/docker-airflow .
-# SOURCE: https://github.com/puckel/docker-airflow
+# This file was modified
+# TAG: 1.9.0alpha1
+# AUTHOR: Matthieu "Puckel_" Roisil, Michael Ghen
+# DESCRIPTION: Basic Airflow container running the latest release
 
 FROM python:3.6-slim
-MAINTAINER Puckel_
+MAINTAINER Michael Ghen
 
 # Never prompts the user for choices on installation/configuration of packages
 ENV DEBIAN_FRONTEND noninteractive
 ENV TERM linux
 
 # Airflow
-ARG AIRFLOW_VERSION=1.8.2
+ARG AIRFLOW_TAG=1.9.0alpha1
 ARG AIRFLOW_HOME=/usr/local/airflow
 
 # Define en_US.
@@ -34,6 +33,7 @@ RUN set -ex \
         libblas-dev \
         liblapack-dev \
         libpq-dev \
+        libmysqlclient-dev \
         git \
     ' \
     && apt-get update -yqq \
@@ -55,7 +55,22 @@ RUN set -ex \
     && pip install pyOpenSSL \
     && pip install ndg-httpsclient \
     && pip install pyasn1 \
-    && pip install apache-airflow[crypto,celery,postgres,hive,jdbc]==$AIRFLOW_VERSION \
+    && pip install git+https://github.com/apache/incubator-airflow.git@$AIRFLOW_TAG \
+    # Manually pip install things from setup.py
+    && pip install mysqlclient \
+    && pip install google-api-python-client \
+    && pip install oauth2client \
+    && pip install pandas-gbq \
+    && pip install pandas-gbq \
+    && pip install httplib2 \
+    && pip install paramiko \
+    && pip install bcrypt \
+    && pip install flask-bcrypt \
+    && pip install slackclient \
+    && pip install celery \
+    && pip install flower \
+    && pip install psycopg2 \
+    && pip install cryptography \
     && pip install celery[redis]==3.1.17 \
     && apt-get purge --auto-remove -yqq $buildDeps \
     && apt-get clean \

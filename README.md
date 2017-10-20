@@ -1,12 +1,6 @@
-# docker-airflow
-[![CircleCI branch](https://img.shields.io/circleci/project/puckel/docker-airflow/master.svg?maxAge=2592000)](https://circleci.com/gh/puckel/docker-airflow/tree/master)
-[![Docker Build Status](https://img.shields.io/docker/build/puckel/docker-airflow.svg)]()
+# docker-airflow (Latests Release)
 
-[![Docker Hub](https://img.shields.io/badge/docker-ready-blue.svg)](https://hub.docker.com/r/puckel/docker-airflow/)
-[![Docker Pulls](https://img.shields.io/docker/pulls/puckel/docker-airflow.svg)]()
-[![Docker Stars](https://img.shields.io/docker/stars/puckel/docker-airflow.svg)]()
-
-This repository contains **Dockerfile** of [apache-airflow](https://github.com/apache/incubator-airflow) for [Docker](https://www.docker.com/)'s [automated build](https://registry.hub.docker.com/u/puckel/docker-airflow/) published to the public [Docker Hub Registry](https://registry.hub.docker.com/).
+This repository contains **Dockerfile** of [apache-airflow](https://github.com/apache/incubator-airflow) for [Docker](https://www.docker.com/)'s [automated build](#) published to the public [Docker Hub Registry](https://registry.hub.docker.com/).
 
 ## Informations
 
@@ -14,8 +8,6 @@ This repository contains **Dockerfile** of [apache-airflow](https://github.com/a
 * Install [Docker](https://www.docker.com/)
 * Install [Docker Compose](https://docs.docker.com/compose/install/)
 * Following the Airflow release from [Python Package Index](https://pypi.python.org/pypi/apache-airflow)
-
-/!\ If you want to use Airflow using Python 2, use TAG [1.8.1](https://github.com/puckel/docker-airflow/releases/tag/1.8.1)
 
 ## Installation
 
@@ -31,12 +23,6 @@ For example, if you need to install [Extra Packages](https://pythonhosted.org/ai
 
 ## Usage
 
-By default, docker-airflow runs Airflow with **SequentialExecutor** :
-
-        docker run -d -p 8080:8080 puckel/docker-airflow
-
-If you want to run another executor, use the other docker-compose.yml files provided in this repository.
-
 For **LocalExecutor** :
 
         docker-compose -f docker-compose-LocalExecutor.yml up -d
@@ -45,11 +31,6 @@ For **CeleryExecutor** :
 
         docker-compose -f docker-compose-CeleryExecutor.yml up -d
 
-NB : If you don't want to have DAGs example loaded (default=True), you've to set the following environment variable :
-
-`LOAD_EX=n`
-
-        docker run -d -p 8080:8080 -e LOAD_EX=n puckel/docker-airflow
 
 If you want to use Ad hoc query, make sure you've configured connections:
 Go to Admin -> Connections and Edit "postgres_default" set this values (equivalent to values in airflow.cfg/docker-compose*.yml) :
